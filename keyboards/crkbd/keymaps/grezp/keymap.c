@@ -14,18 +14,31 @@ bool master_oled_cleared = false;
 #define M_NUM    MO(_NUM)
 #define M_SYM    MO(_SYM)
 #define M_ADJ    MO(_ADJ)
+#define T_QWER   TG(_QWERTY)
 
 // [Keymaps] -----------------------------------------------------------------//
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY] = LAYOUT( \
+    [_COLEMAK] = LAYOUT( \
     //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,\
+        KC_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,\
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_TAB,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,\
+        KC_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,\
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_LALT,\
+       KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_LALT,\
     //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                            KC_LGUI,   M_SYM,  KC_SPC,    KC_LSFT,   M_NUM,  KC_ENT \
+                                      //`--------------------------'  `--------------------------'
+    ),
+
+    [_QWERTY] = LAYOUT( \
+    //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+         _____,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,    _____,\
+    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         _____,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,\
+    //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+         _____,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,   _____,\
+    //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                             _____,   _____,   _____,      _____,   _____,   _____ \
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -55,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJ] = LAYOUT( \
     //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-         RESET,   XXXXX,   XXXXX, KC_MS_U,   XXXXX,   XXXXX,                        XXXXX, KC_WH_D,   XXXXX,   XXXXX,  KC_F11,  KC_F12,\
+         RESET,  T_QWER,   XXXXX, KC_MS_U,   XXXXX,   XXXXX,                        XXXXX, KC_WH_D,   XXXXX,   XXXXX,  KC_F11,  KC_F12,\
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
          XXXXX,   XXXXX, KC_MS_L, KC_MS_D, KC_MS_R,   XXXXX,                        XXXXX, KC_BTN1, KC_BTN2, KC_BTN3,   XXXXX,   XXXXX,\
     //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -105,17 +118,9 @@ void render_logo(void) {
 // Master OLED Screen (Left Hand )
 void render_master_oled(void) {
     render_separator();
-    render_layer_state();
-    render_separator();
     render_usb_state();
-    // Switch display based on Layer
-    // switch (get_highest_layer(layer_state)){
-    //     default:
-    //         render_separator();
-    //         render_layer_state();
-    //         render_separator();
-    //         render_usb_state();
-    // }
+    render_separator();
+    render_layer_state();
 }
 
 // Slave OLED scren (Right Hand)
